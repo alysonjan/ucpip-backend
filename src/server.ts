@@ -13,7 +13,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://34ef-112-208-67-62.ngrok-free.app ",
+      "https://ucpip-frontend-production.up.railway.app",
     ], // Allow requests from your frontend
     methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
     credentials: true, // Allow sending cookies and credentials if needed
