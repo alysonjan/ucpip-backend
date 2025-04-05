@@ -21,22 +21,7 @@ const port = process.env.PORT || 5000;
 // );
 app.use(
   cors({
-    origin: (origin, callback) => {
-      const allowedOrigins = [
-        "http://localhost:3000",
-        "https://ucpip-frontend-production.up.railway.app",
-      ];
-
-      // Allow requests with no origin (e.g. from mobile apps, curl)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        // Explicitly return the incoming origin
-        return callback(null, origin);
-      } else {
-        return callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "https://ucpip-frontend-production.up.railway.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
