@@ -11,7 +11,10 @@ const port = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow requests from your frontend
+    origin: [
+      "http://localhost:3000",
+      "https://34ef-112-208-67-62.ngrok-free.app ",
+    ], // Allow requests from your frontend
     methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
     credentials: true, // Allow sending cookies and credentials if needed
   })
