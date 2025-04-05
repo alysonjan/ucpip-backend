@@ -294,7 +294,7 @@ export const signInController = async (req: Request, res: Response) => {
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 8 * 3600000, // 8 hours in milliseconds
     });
 
@@ -320,7 +320,7 @@ export const logoutController = (req: Request, res: Response) => {
     res.clearCookie("jwt", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     return res.status(200).json({ message: "Logout successful" });
