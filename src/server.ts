@@ -21,7 +21,7 @@ const port = process.env.PORT || 5000;
 // );
 app.use(
   cors({
-    origin: "https://ucpip-frontend-production.up.railway.app",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
