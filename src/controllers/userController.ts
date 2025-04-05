@@ -29,7 +29,9 @@ interface UserProfile {
   active: number;
 }
 
-export const isSuperAdmin = async (req: AuthenticatedRequest): Promise<boolean> => {
+export const isSuperAdmin = async (
+  req: AuthenticatedRequest
+): Promise<boolean> => {
   try {
     const email = req.user?.email;
 
@@ -77,12 +79,16 @@ export const signupController = async (req: Request, res: Response) => {
     const isSuperAdminUser = await isSuperAdmin(req);
 
     if (!isAdminUser && !isSuperAdminUser) {
-      return res.status(403).json({ message: "Access denied: Unauthorized User" });
+      return res
+        .status(403)
+        .json({ message: "Access denied: Unauthorized User" });
     }
 
     // Check if the email exists and ends with 'phinmaed.com'
     if (!email || !email.endsWith("@phinmaed.com")) {
-      return res.status(400).json({ message: "Invalid Email. Must be a phinmaed.com email." });
+      return res
+        .status(400)
+        .json({ message: "Invalid Email. Must be a phinmaed.com email." });
     }
 
     if (!firstname || !lastname || !email || !temp_password || !role) {
@@ -97,7 +103,7 @@ export const signupController = async (req: Request, res: Response) => {
 
     await createUser({ firstname, lastname, email, temp_password, role });
 
-    const newUserCreatePassword = `http://localhost:3000/create-password`;
+    const newUserCreatePassword = `${process.env.FRONTEND_URL}/create-password`;
 
     // HTML content with a welcome message and a link to change the default password
     const htmlContent = `
@@ -119,7 +125,9 @@ export const signupController = async (req: Request, res: Response) => {
     res.status(201).json({ message: "User created successfully" });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      res.status(500).json({ message: "Error creating user", error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error creating user", error: error.message });
     } else {
       res.status(500).json({ message: "An unexpected error occurred" });
     }
@@ -143,7 +151,10 @@ export const userCreatePassword = async (req: Request, res: Response) => {
     if (action === "update_password") {
       // update the password
 
-      const updateForgotPassword = await updatePassword(getUser.email, password);
+      const updateForgotPassword = await updatePassword(
+        getUser.email,
+        password
+      );
       if (!updateForgotPassword) {
         return res.status(500).json({ message: "Something went wrong" });
       }
@@ -170,7 +181,9 @@ export const resetPassword = async (req: Request, res: Response) => {
 
     // Check if the email exists and ends with 'phinmaed.com'
     if (!email || !email.endsWith("@phinmaed.com")) {
-      return res.status(400).json({ message: "Invalid Email. Must be a phinmaed.com email." });
+      return res
+        .status(400)
+        .json({ message: "Invalid Email. Must be a phinmaed.com email." });
     }
 
     // Assume getUserByEmail is a function that retrieves the user by email
@@ -184,7 +197,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     const emailEncoded = encodeURIComponent(getUser.email);
 
     // Add the email as a query parameter to the reset password link
-    const resetPasswordLink = `http://localhost:3000/update-password?email=${emailEncoded}`;
+    const resetPasswordLink = `${process.env.FRONTEND_URL}/update-password?email=${emailEncoded}`;
 
     // HTML content with a link
     const htmlContent = `
@@ -204,7 +217,9 @@ export const resetPassword = async (req: Request, res: Response) => {
       return res.status(500).json({ message: "Something went wrong" });
     }
 
-    return res.status(200).json({ message: "Password reset email sent successfully." });
+    return res
+      .status(200)
+      .json({ message: "Password reset email sent successfully." });
   } catch (error: unknown) {
     if (error instanceof Error) {
       res.status(500).json({ message: "Error Updating", error: error.message });
@@ -213,62 +228,6 @@ export const resetPassword = async (req: Request, res: Response) => {
     }
   }
 };
-// export const signInController = async (req: Request, res: Response) => {
-//   try {
-//     const { email, password } = req.body;
-
-//     if (!email || !password) {
-//       return res.status(400).json({ message: "All fields are required" });
-//     }
-
-//     const getUser = await getUserByEmail(email);
-
-//     if (!getUser) {
-//       return res.status(401).json({ message: "Invalid email or password" });
-//     }
-
-//     const checkIsUserPasswordAlreadyActivated = await isUserPasswordAlreadyActivated(getUser.email);
-
-//     if (!checkIsUserPasswordAlreadyActivated) {
-//       return res
-//         .status(401)
-//         .json({ message: "Please change your password first from default password", error: "password activation" });
-//     }
-
-//     const isPasswordValid = await bcrypt.compare(password, getUser.password);
-
-//     if (!isPasswordValid) {
-//       return res.status(401).json({ message: "Invalid email or password" });
-//     }
-
-//     if (getUser.active === 0) {
-//       return res.status(401).json({ message: "Unauthorized" });
-//     }
-
-//     const token = generateToken(getUser.id, getUser.email);
-
-//     res.cookie("jwt", token, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production",
-//       sameSite: "lax",
-//       maxAge: 8 * 3600000, // 8 hour in milliseconds
-//       // maxAge: 5 * 1000, // 5 seconds in milliseconds
-//     });
-
-//     return res.status(200).json({
-//       message: "Login successful",
-//       email: getUser.email,
-//       fullname: `${getUser.firstname} ${getUser.lastname}`,
-//       role: getUser.role,
-//     });
-//   } catch (error: unknown) {
-//     if (error instanceof Error) {
-//       res.status(500).json({ message: "Error Logging in", error: error.message });
-//     } else {
-//       res.status(500).json({ message: "An unexpected error occurred" });
-//     }
-//   }
-// };
 
 export const signInController = async (req: Request, res: Response) => {
   try {
@@ -282,14 +241,20 @@ export const signInController = async (req: Request, res: Response) => {
 
     if (!getUser) {
       // Fallback Admin Login
-      if (email === process.env.FALLBACK_ADMIN && password === process.env.FALLBACK_PASSWORD) {
+      if (
+        email === process.env.FALLBACK_ADMIN &&
+        password === process.env.FALLBACK_PASSWORD
+      ) {
         // Generate a token for the fallback admin
-        const token = generateToken("fallback_admin", process.env.FALLBACK_ADMIN ?? "");
+        const token = generateToken(
+          "fallback_admin",
+          process.env.FALLBACK_ADMIN ?? ""
+        );
 
         res.cookie("jwt", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
           maxAge: 8 * 3600000, // 8 hours in milliseconds
         });
 
@@ -304,12 +269,14 @@ export const signInController = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const checkIsUserPasswordAlreadyActivated = await isUserPasswordAlreadyActivated(getUser.email);
+    const checkIsUserPasswordAlreadyActivated =
+      await isUserPasswordAlreadyActivated(getUser.email);
 
     if (!checkIsUserPasswordAlreadyActivated) {
-      return res
-        .status(401)
-        .json({ message: "Please change your password first from default password", error: "password activation" });
+      return res.status(401).json({
+        message: "Please change your password first from default password",
+        error: "password activation",
+      });
     }
 
     const isPasswordValid = await bcrypt.compare(password, getUser.password);
@@ -339,7 +306,9 @@ export const signInController = async (req: Request, res: Response) => {
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      res.status(500).json({ message: "Error Logging in", error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error Logging in", error: error.message });
     } else {
       res.status(500).json({ message: "An unexpected error occurred" });
     }
@@ -357,7 +326,9 @@ export const logoutController = (req: Request, res: Response) => {
     return res.status(200).json({ message: "Logout successful" });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      res.status(500).json({ message: "Error logging out", error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error logging out", error: error.message });
     } else {
       res.status(500).json({ message: "An unexpected error occurred" });
     }
@@ -370,14 +341,18 @@ export const getUsers = async (req: Request, res: Response) => {
     const isSuperAdminUser = await isSuperAdmin(req);
 
     if (!isAdminUser && !isSuperAdminUser) {
-      return res.status(403).json({ message: "Access denied: Unauthorized User" });
+      return res
+        .status(403)
+        .json({ message: "Access denied: Unauthorized User" });
     }
 
     const allUsers = await getAllUsers();
     return res.json(allUsers);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      res.status(500).json({ message: "Error fetching users", error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error fetching users", error: error.message });
     } else {
       res.status(500).json({ message: "An unexpected error occurred" });
     }
@@ -389,7 +364,9 @@ export const userStatus = async (req: Request, res: Response) => {
     const isAdminUser = await isAdmin(req);
 
     if (!isAdminUser) {
-      return res.status(403).json({ message: "Access denied: Unauthorized User" });
+      return res
+        .status(403)
+        .json({ message: "Access denied: Unauthorized User" });
     }
 
     const updateStat = await updateUserStatus(req.body);
@@ -400,7 +377,9 @@ export const userStatus = async (req: Request, res: Response) => {
     return res.status(200).json(false);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      res.status(500).json({ message: "Error fetching users", error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error fetching users", error: error.message });
     } else {
       res.status(500).json({ message: "An unexpected error occurred" });
     }
@@ -417,7 +396,10 @@ export const updateContactNumber = async (req: Request, res: Response) => {
     return res.status(200).json(false);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      res.status(500).json({ message: "Error updating users contact number", error: error.message });
+      res.status(500).json({
+        message: "Error updating users contact number",
+        error: error.message,
+      });
     } else {
       res.status(500).json({ message: "An unexpected error occurred" });
     }
