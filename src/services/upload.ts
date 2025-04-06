@@ -18,13 +18,13 @@ import multer from "multer";
 import path from "path";
 import { mkdirSync, chmodSync } from "fs";
 
-// Define the upload directory with an absolute path
-const uploadDir = path.join(__dirname, "../../public/Signatures");
+// Use process.cwd() to reliably refer to the root of your project in production
+const uploadDir = path.join(process.cwd(), "public", "Signatures");
 
 // Create directory if it doesn’t exist and set permissions
 try {
-  mkdirSync(uploadDir, { recursive: true }); // Equivalent to mkdir -p
-  chmodSync(uploadDir, 0o755); // Equivalent to chmod 755
+  mkdirSync(uploadDir, { recursive: true });
+  chmodSync(uploadDir, 0o755);
   console.log(`Ensured directory exists with 755 permissions: ${uploadDir}`);
 } catch (err) {
   console.error(`Failed to create or set permissions on ${uploadDir}:`, err);
