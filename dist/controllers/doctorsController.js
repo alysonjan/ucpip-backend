@@ -47,7 +47,9 @@ const saveDoctor = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     catch (error) {
         if (error instanceof Error) {
-            return res.status(500).json({ message: "Something went wrong", error: error.message });
+            return res
+                .status(500)
+                .json({ message: "Something went wrong", error: error.message });
         }
         else {
             return res.status(500).json({ message: "An unexpected error occurred" });
@@ -63,7 +65,9 @@ const deleteDoctor = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     catch (error) {
         if (error instanceof Error) {
-            return res.status(500).json({ message: "Something went wrong", error: error.message });
+            return res
+                .status(500)
+                .json({ message: "Something went wrong", error: error.message });
         }
         else {
             return res.status(500).json({ message: "An unexpected error occurred" });
@@ -78,7 +82,9 @@ const doctors = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         if (error instanceof Error) {
-            return res.status(500).json({ message: "Error fetching Doctors", error: error.message });
+            return res
+                .status(500)
+                .json({ message: "Error fetching Doctors", error: error.message });
         }
         else {
             return res.status(500).json({ message: "An unexpected error occurred" });
