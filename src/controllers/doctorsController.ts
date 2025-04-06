@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
-import { checkDoctorIfExist, createNewDoctor, getDoctors, removeDoctor, updateDoctor } from "../models/Doctors";
+import {
+  checkDoctorIfExist,
+  createNewDoctor,
+  getDoctors,
+  removeDoctor,
+  updateDoctor,
+} from "../models/Doctors";
 
 import { Readable } from "stream";
 
@@ -64,7 +70,9 @@ export const saveDoctor = async (req: MulterRequest, res: Response) => {
     return res.status(201).json({ message: "Doctor added successfully" });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return res.status(500).json({ message: "Something went wrong", error: error.message });
+      return res
+        .status(500)
+        .json({ message: "Something went wrong", error: error.message });
     } else {
       return res.status(500).json({ message: "An unexpected error occurred" });
     }
@@ -79,7 +87,9 @@ export const deleteDoctor = async (req: Request, res: Response) => {
     return res.status(200).json({ message: "successfully deleted" });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return res.status(500).json({ message: "Something went wrong", error: error.message });
+      return res
+        .status(500)
+        .json({ message: "Something went wrong", error: error.message });
     } else {
       return res.status(500).json({ message: "An unexpected error occurred" });
     }
@@ -93,7 +103,9 @@ export const doctors = async (req: Request, res: Response) => {
     return res.status(200).json(docs);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return res.status(500).json({ message: "Error fetching Doctors", error: error.message });
+      return res
+        .status(500)
+        .json({ message: "Error fetching Doctors", error: error.message });
     } else {
       return res.status(500).json({ message: "An unexpected error occurred" });
     }
