@@ -29,10 +29,8 @@ export const buildPDFDocsForMedicalCertificate = async (
   // Load the template PDF
 
   // const templatePath = `./public/v4/${payload.document_type}.pdf`;
-  const baseDir = path.join(__dirname, "..");
-
   const templatePath = path.join(
-    baseDir,
+    process.cwd(),
     "public",
     "v4",
     `${payload.document_type}.pdf`
@@ -44,9 +42,9 @@ export const buildPDFDocsForMedicalCertificate = async (
   // const imagePath = `./public/signatures/${payload.doctor_signature}`;
   // Construct the image path using the same approach.
   const imagePath = path.join(
-    baseDir,
+    process.cwd(),
     "public",
-    "signatures", // Adjust the directory to match the case used in your working code.
+    "Signatures", // Adjust the directory to match the case used in your working code.
     `${payload.doctor_signature}`
   );
   const imageBytes = fs.readFileSync(imagePath);
@@ -180,11 +178,8 @@ export const buildPDFDocsForReferralForm = async (
 
   // Load the template PDF
   // const templatePath = `./public/v3/${payload.document_type}.pdf`;
-
-  const baseDir = path.join(__dirname, "..");
-
   const templatePath = path.join(
-    baseDir,
+    process.cwd(),
     "public",
     "v3",
     `${payload.document_type}.pdf`
@@ -198,9 +193,9 @@ export const buildPDFDocsForReferralForm = async (
 
   // const imagePath = `./public/signatures/${payload.doctor_signature}`;
   const imagePath = path.join(
-    baseDir,
+    process.cwd(),
     "public",
-    "signatures", // Adjust the directory to match the case used in your working code.
+    "Signatures", // Adjust the directory to match the case used in your working code.
     `${payload.doctor_signature}`
   );
 
@@ -484,11 +479,8 @@ export const buildPDFDocsForClinicNote = async (
 
   // Load the template PDF
   // const templatePath = `./public/v3/${payload.document_type}.pdf`;
-
-  const baseDir = path.join(__dirname, "..");
-
   const templatePath = path.join(
-    baseDir,
+    process.cwd(),
     "public",
     "v3",
     `${payload.document_type}.pdf`
@@ -502,9 +494,9 @@ export const buildPDFDocsForClinicNote = async (
 
   // const imagePath = `./public/signatures/${payload.doctor_signature}`;
   const imagePath = path.join(
-    baseDir,
+    process.cwd(),
     "public",
-    "signatures", // Adjust the directory to match the case used in your working code.
+    "Signatures", // Adjust the directory to match the case used in your working code.
     `${payload.doctor_signature}`
   );
 
@@ -771,11 +763,8 @@ export const buildPDFDocsForPhysicalExamForm = async (
 
   // Load the template PDF
   // const templatePath = `./public/v4/${payload.document_type}.pdf`;
-
-  const baseDir = path.join(__dirname, "..");
-
   const templatePath = path.join(
-    baseDir,
+    process.cwd(),
     "public",
     "v4",
     `${payload.document_type}.pdf`
@@ -789,12 +778,11 @@ export const buildPDFDocsForPhysicalExamForm = async (
 
   // const imagePath = `./public/signatures/${payload.doctor_signature}`;
   const imagePath = path.join(
-    baseDir,
+    process.cwd(),
     "public",
-    "signatures", // Adjust the directory to match the case used in your working code.
+    "Signatures", // Adjust the directory to match the case used in your working code.
     `${payload.doctor_signature}`
   );
-
   const imageBytes = fs.readFileSync(imagePath);
   // Embed the image
   const image = await pdfDoc.embedPng(imageBytes); // or embedJpg depending on the image format
