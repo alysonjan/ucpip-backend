@@ -27,13 +27,26 @@ export const buildPDFDocsForMedicalCertificate = async (
   const pdfDoc = await PDFDocument.create();
 
   // Load the template PDF
-  // const templatePath = `./public/templates/${payload.document_type}.pdf`; // Adjust the path as needed
-  const templatePath = `./public/v4/${payload.document_type}.pdf`; // Adjust the path as needed
+
+  // const templatePath = `./public/v4/${payload.document_type}.pdf`;
+  const templatePath = path.join(
+    process.cwd(),
+    "public",
+    "v4",
+    `${payload.document_type}.pdf`
+  );
 
   const templateBytes = fs.readFileSync(templatePath);
   const templatePdf = await PDFDocument.load(templateBytes);
 
-  const imagePath = `./public/signatures/${payload.doctor_signature}`;
+  // const imagePath = `./public/signatures/${payload.doctor_signature}`;
+  // Construct the image path using the same approach.
+  const imagePath = path.join(
+    process.cwd(),
+    "public",
+    "Signatures", // Adjust the directory to match the case used in your working code.
+    `${payload.doctor_signature}`
+  );
   const imageBytes = fs.readFileSync(imagePath);
   // Embed the image
   const image = await pdfDoc.embedPng(imageBytes); // or embedJpg depending on the image format
@@ -156,7 +169,10 @@ interface ReferralFormPayload {
   doctor_prc_license: string;
 }
 
-export const buildPDFDocsForReferralForm = async (payload: ReferralFormPayload, filePath: string): Promise<void> => {
+export const buildPDFDocsForReferralForm = async (
+  payload: ReferralFormPayload,
+  filePath: string
+): Promise<void> => {
   // Create a new PDF document
   const pdfDoc = await PDFDocument.create();
 
@@ -212,7 +228,15 @@ export const buildPDFDocsForReferralForm = async (payload: ReferralFormPayload, 
     color: rgb(0, 0, 0),
   });
 
-  drawWrappedText(page, font, payload.department.toUpperCase(), 330, 560, 113, 8);
+  drawWrappedText(
+    page,
+    font,
+    payload.department.toUpperCase(),
+    330,
+    560,
+    113,
+    8
+  );
 
   // ******** AGE ********
   page.drawText(payload.age, {
@@ -254,7 +278,15 @@ export const buildPDFDocsForReferralForm = async (payload: ReferralFormPayload, 
     color: rgb(0, 0, 0),
   });
 
-  drawWrappedText(page, font, payload.chief_complaint.toUpperCase(), 148, 513, 200, 8);
+  drawWrappedText(
+    page,
+    font,
+    payload.chief_complaint.toUpperCase(),
+    148,
+    513,
+    200,
+    8
+  );
 
   // ******** WORKING DX ********
   page.drawText(payload.working_dx.toUpperCase(), {
@@ -338,7 +370,15 @@ export const buildPDFDocsForReferralForm = async (payload: ReferralFormPayload, 
 
   drawWrappedText(page, font, payload.remarks.toUpperCase(), 110, 333, 500, 8);
 
-  drawWrappedText(page, font, payload.reason_for_consultation.toUpperCase(), 110, 230, 500, 8);
+  drawWrappedText(
+    page,
+    font,
+    payload.reason_for_consultation.toUpperCase(),
+    110,
+    230,
+    500,
+    8
+  );
 
   // ******** DOCTOR ********
   // page.drawImage(image, {
@@ -416,7 +456,10 @@ interface ClinicNotePayload {
   doctor_prc_license: string;
 }
 
-export const buildPDFDocsForClinicNote = async (payload: ClinicNotePayload, filePath: string): Promise<void> => {
+export const buildPDFDocsForClinicNote = async (
+  payload: ClinicNotePayload,
+  filePath: string
+): Promise<void> => {
   // Create a new PDF document
   const pdfDoc = await PDFDocument.create();
 
@@ -472,7 +515,15 @@ export const buildPDFDocsForClinicNote = async (payload: ClinicNotePayload, file
     color: rgb(0, 0, 0),
   });
 
-  drawWrappedText(page, font, payload.department.toUpperCase(), 330, 560, 113, 8);
+  drawWrappedText(
+    page,
+    font,
+    payload.department.toUpperCase(),
+    330,
+    560,
+    113,
+    8
+  );
 
   // ******** AGE ********
   page.drawText(payload.age, {
@@ -514,7 +565,15 @@ export const buildPDFDocsForClinicNote = async (payload: ClinicNotePayload, file
     color: rgb(0, 0, 0),
   });
 
-  drawWrappedText(page, font, payload.chief_complaint.toUpperCase(), 145, 512, 200, 8);
+  drawWrappedText(
+    page,
+    font,
+    payload.chief_complaint.toUpperCase(),
+    145,
+    512,
+    200,
+    8
+  );
 
   // ******** WORKING DX ********
   page.drawText(payload.working_dx.toUpperCase(), {
@@ -726,7 +785,15 @@ export const buildPDFDocsForPhysicalExamForm = async (
     color: rgb(0, 0, 0),
   });
 
-  drawWrappedText(page, font, payload.department.toUpperCase(), 345, 552, 113, 8);
+  drawWrappedText(
+    page,
+    font,
+    payload.department.toUpperCase(),
+    345,
+    552,
+    113,
+    8
+  );
 
   // ******** AGE ********
   page.drawText(payload.age, {
