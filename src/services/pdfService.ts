@@ -44,7 +44,7 @@ export const buildPDFDocsForMedicalCertificate = async (
   const imagePath = path.join(
     process.cwd(),
     "public",
-    "Signatures", // Adjust the directory to match the case used in your working code.
+    "signatures", // Adjust the directory to match the case used in your working code.
     `${payload.doctor_signature}`
   );
   const imageBytes = fs.readFileSync(imagePath);
@@ -177,14 +177,28 @@ export const buildPDFDocsForReferralForm = async (
   const pdfDoc = await PDFDocument.create();
 
   // Load the template PDF
-  const templatePath = `./public/v3/${payload.document_type}.pdf`; // Adjust the path as needed
+  // const templatePath = `./public/v3/${payload.document_type}.pdf`;
+  const templatePath = path.join(
+    process.cwd(),
+    "public",
+    "v3",
+    `${payload.document_type}.pdf`
+  );
+
   const templateBytes = fs.readFileSync(templatePath);
   const templatePdf = await PDFDocument.load(templateBytes);
 
   // Get the first page from the template PDF
   const [templatePage] = await pdfDoc.copyPages(templatePdf, [0]);
 
-  const imagePath = `./public/signatures/${payload.doctor_signature}`;
+  // const imagePath = `./public/signatures/${payload.doctor_signature}`;
+  const imagePath = path.join(
+    process.cwd(),
+    "public",
+    "signatures", // Adjust the directory to match the case used in your working code.
+    `${payload.doctor_signature}`
+  );
+
   const imageBytes = fs.readFileSync(imagePath);
   // Embed the image
   const image = await pdfDoc.embedPng(imageBytes); // or embedJpg depending on the image format
@@ -464,14 +478,28 @@ export const buildPDFDocsForClinicNote = async (
   const pdfDoc = await PDFDocument.create();
 
   // Load the template PDF
-  const templatePath = `./public/v3/${payload.document_type}.pdf`; // Adjust the path as needed
+  // const templatePath = `./public/v3/${payload.document_type}.pdf`;
+  const templatePath = path.join(
+    process.cwd(),
+    "public",
+    "v3",
+    `${payload.document_type}.pdf`
+  );
+
   const templateBytes = fs.readFileSync(templatePath);
   const templatePdf = await PDFDocument.load(templateBytes);
 
   // Get the first page from the template PDF
   const [templatePage] = await pdfDoc.copyPages(templatePdf, [0]);
 
-  const imagePath = `./public/signatures/${payload.doctor_signature}`;
+  // const imagePath = `./public/signatures/${payload.doctor_signature}`;
+  const imagePath = path.join(
+    process.cwd(),
+    "public",
+    "signatures", // Adjust the directory to match the case used in your working code.
+    `${payload.doctor_signature}`
+  );
+
   const imageBytes = fs.readFileSync(imagePath);
   // Embed the image
   const image = await pdfDoc.embedPng(imageBytes); // or embedJpg depending on the image format
@@ -734,14 +762,28 @@ export const buildPDFDocsForPhysicalExamForm = async (
   const pdfDoc = await PDFDocument.create();
 
   // Load the template PDF
-  const templatePath = `./public/v4/${payload.document_type}.pdf`; // Adjust the path as needed
+  // const templatePath = `./public/v4/${payload.document_type}.pdf`;
+  const templatePath = path.join(
+    process.cwd(),
+    "public",
+    "v4",
+    `${payload.document_type}.pdf`
+  );
+
   const templateBytes = fs.readFileSync(templatePath);
   const templatePdf = await PDFDocument.load(templateBytes);
 
   // Get the first page from the template PDF
   const [templatePage] = await pdfDoc.copyPages(templatePdf, [0]);
 
-  const imagePath = `./public/signatures/${payload.doctor_signature}`;
+  // const imagePath = `./public/signatures/${payload.doctor_signature}`;
+  const imagePath = path.join(
+    process.cwd(),
+    "public",
+    "signatures", // Adjust the directory to match the case used in your working code.
+    `${payload.doctor_signature}`
+  );
+
   const imageBytes = fs.readFileSync(imagePath);
   // Embed the image
   const image = await pdfDoc.embedPng(imageBytes); // or embedJpg depending on the image format

@@ -27,7 +27,7 @@ const buildPDFDocsForMedicalCertificate = (payload, filePath) => __awaiter(void 
     const templatePdf = yield pdf_lib_1.PDFDocument.load(templateBytes);
     // const imagePath = `./public/signatures/${payload.doctor_signature}`;
     // Construct the image path using the same approach.
-    const imagePath = path_1.default.join(process.cwd(), "public", "Signatures", // Adjust the directory to match the case used in your working code.
+    const imagePath = path_1.default.join(process.cwd(), "public", "signatures", // Adjust the directory to match the case used in your working code.
     `${payload.doctor_signature}`);
     const imageBytes = fs_1.default.readFileSync(imagePath);
     // Embed the image
@@ -104,12 +104,15 @@ const buildPDFDocsForReferralForm = (payload, filePath) => __awaiter(void 0, voi
     // Create a new PDF document
     const pdfDoc = yield pdf_lib_1.PDFDocument.create();
     // Load the template PDF
-    const templatePath = `./public/v3/${payload.document_type}.pdf`; // Adjust the path as needed
+    // const templatePath = `./public/v3/${payload.document_type}.pdf`;
+    const templatePath = path_1.default.join(process.cwd(), "public", "v3", `${payload.document_type}.pdf`);
     const templateBytes = fs_1.default.readFileSync(templatePath);
     const templatePdf = yield pdf_lib_1.PDFDocument.load(templateBytes);
     // Get the first page from the template PDF
     const [templatePage] = yield pdfDoc.copyPages(templatePdf, [0]);
-    const imagePath = `./public/signatures/${payload.doctor_signature}`;
+    // const imagePath = `./public/signatures/${payload.doctor_signature}`;
+    const imagePath = path_1.default.join(process.cwd(), "public", "signatures", // Adjust the directory to match the case used in your working code.
+    `${payload.doctor_signature}`);
     const imageBytes = fs_1.default.readFileSync(imagePath);
     // Embed the image
     const image = yield pdfDoc.embedPng(imageBytes); // or embedJpg depending on the image format
@@ -296,12 +299,15 @@ const buildPDFDocsForClinicNote = (payload, filePath) => __awaiter(void 0, void 
     // Create a new PDF document
     const pdfDoc = yield pdf_lib_1.PDFDocument.create();
     // Load the template PDF
-    const templatePath = `./public/v3/${payload.document_type}.pdf`; // Adjust the path as needed
+    // const templatePath = `./public/v3/${payload.document_type}.pdf`;
+    const templatePath = path_1.default.join(process.cwd(), "public", "v3", `${payload.document_type}.pdf`);
     const templateBytes = fs_1.default.readFileSync(templatePath);
     const templatePdf = yield pdf_lib_1.PDFDocument.load(templateBytes);
     // Get the first page from the template PDF
     const [templatePage] = yield pdfDoc.copyPages(templatePdf, [0]);
-    const imagePath = `./public/signatures/${payload.doctor_signature}`;
+    // const imagePath = `./public/signatures/${payload.doctor_signature}`;
+    const imagePath = path_1.default.join(process.cwd(), "public", "signatures", // Adjust the directory to match the case used in your working code.
+    `${payload.doctor_signature}`);
     const imageBytes = fs_1.default.readFileSync(imagePath);
     // Embed the image
     const image = yield pdfDoc.embedPng(imageBytes); // or embedJpg depending on the image format
@@ -487,12 +493,15 @@ const buildPDFDocsForPhysicalExamForm = (payload, filePath) => __awaiter(void 0,
     // Create a new PDF document
     const pdfDoc = yield pdf_lib_1.PDFDocument.create();
     // Load the template PDF
-    const templatePath = `./public/v4/${payload.document_type}.pdf`; // Adjust the path as needed
+    // const templatePath = `./public/v4/${payload.document_type}.pdf`;
+    const templatePath = path_1.default.join(process.cwd(), "public", "v4", `${payload.document_type}.pdf`);
     const templateBytes = fs_1.default.readFileSync(templatePath);
     const templatePdf = yield pdf_lib_1.PDFDocument.load(templateBytes);
     // Get the first page from the template PDF
     const [templatePage] = yield pdfDoc.copyPages(templatePdf, [0]);
-    const imagePath = `./public/signatures/${payload.doctor_signature}`;
+    // const imagePath = `./public/signatures/${payload.doctor_signature}`;
+    const imagePath = path_1.default.join(process.cwd(), "public", "signatures", // Adjust the directory to match the case used in your working code.
+    `${payload.doctor_signature}`);
     const imageBytes = fs_1.default.readFileSync(imagePath);
     // Embed the image
     const image = yield pdfDoc.embedPng(imageBytes); // or embedJpg depending on the image format
